@@ -1,1 +1,1 @@
-personal practice program
+personal practice project
