@@ -1,0 +1,91 @@
+pluginManagement {
+//    repositories {
+//        google()
+//        mavenCentral()
+//        gradlePluginPortal()
+//        maven {
+//            url "https://plugins.gradle.org/m2/"
+//            allowInsecureProtocol true
+//            mavenContent { releasesOnly() }
+//        }
+////        mavenLocal()
+////        maven {
+////            allowInsecureProtocol(true)
+////            url 'http://maven.amh-group.com/artifactory/libs-release-local'
+////        }
+////        maven {
+////            allowInsecureProtocol(true)
+////            url 'http://maven.amh-group.com/artifactory/libs-release'
+////        }
+////        maven {
+////            allowInsecureProtocol(true)
+////            url 'http://maven.amh-group.com/artifactory/libs-snapshot'
+////        }
+//    }
+
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        // JitPack 远程仓库：https://jitpack.io
+        maven { url 'https://jitpack.io' }
+        maven {
+            allowInsecureProtocol(true)
+            url 'http://maven.amh-group.com/artifactory/libs-release-local'
+        }
+        maven {
+            allowInsecureProtocol(true)
+            url 'http://maven.amh-group.com/artifactory/libs-release'
+        }
+        maven {
+            allowInsecureProtocol(true)
+            url 'http://maven.amh-group.com/artifactory/libs-snapshot'
+        }
+
+        // tyt
+        maven {
+            allowInsecureProtocol(true)
+            url 'http://192.168.2.20:8081/nexus/content/repositories/snapshots/'
+        }
+        maven {
+            allowInsecureProtocol(true)
+            url 'http://192.168.2.20:8081/nexus/content/repositories/release/'
+        }
+    }
+//    repositories {
+//        google()
+//        mavenCentral()
+//        maven {
+//            url "https://plugins.gradle.org/m2/"
+//            allowInsecureProtocol true
+//            mavenContent { releasesOnly() }
+//        }
+//        mavenLocal()
+
+//        maven {
+//            allowInsecureProtocol(true)
+//            url 'http://maven.amh-group.com/artifactory/libs-release-local'
+//        }
+//        maven {
+//            allowInsecureProtocol(true)
+//            url 'http://maven.amh-group.com/artifactory/libs-release'
+//        }
+//        maven {
+//            allowInsecureProtocol(true)
+//            url 'http://maven.amh-group.com/artifactory/libs-snapshot'
+//        }
+//    }
+
+}
+
+rootProject.name = "AndroidExample"
+include ':app'
+//include ':library'
+include ':dns-resolver'

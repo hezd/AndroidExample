@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.hezd.practice">
+
+    <queries>
+        <package android:name="com.yzm56.driver" />
+    </queries>
+    <queries>
+        <package android:name="com.hihonor.appmarket" />
+    </queries>
+
+    <!-- 添加网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <application
+        android:name=".ExampleApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.BehaviorExample">
+        <!-- <activity -->
+        <!-- android:name=".activity.DataStoreOneActivity" -->
+        <!-- android:exported="false" /> -->
+        <activity
+            android:name=".activity.CustomViewActivity"
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".activity.DataFlowActivity" -->
+        <!-- android:exported="false" /> -->
+        <activity
+            android:name=".activity.SecondActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.WebViewRenderActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="false" />
+        <!-- android:name=".MainActivity2" -->
+        <!-- android:exported="false" /> -->
+        <!-- <activity android:name=".TouchExampleActivity" /> -->
+        <activity
+            android:name=".activity.RootActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".activity.AppStoreActivity"
+            android:exported="true"
+            />
+
+        <service android:name="com.blankj.utilcode.util.MessengerUtils$ServerService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="${applicationId}.messenger" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>

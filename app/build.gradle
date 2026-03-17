@@ -1,0 +1,118 @@
+plugins {
+    id 'com.android.application'
+
+    id 'org.jetbrains.kotlin.android'
+
+}
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.hezd.androidexample"
+        minSdk 23
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+//        ndk {
+//            abiFilters 'armeabi', 'arm64-v8a'
+//        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures{
+        viewBinding  true
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
+//    implementation files('libs/phantom-gradle-plugin-5.0.5-sources.jar')
+//    implementation files('libs/app-opt-1.1.1-REMOVE-MODULE-INFO-3-SNAPSHOT.jar')
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
+    implementation "org.apache.commons:commons-csv:1.10.0"
+//    implementation "com.ymm.lib.widget:placeholder:1.0.6-SNAPSHOT"
+    implementation "androidx.activity:activity-ktx:1.1.0"
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation 'com.jakewharton.timber:timber:5.0.1'
+
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
+
+//    implementation "com.github.getActivity:XXPermissions:18.5"
+    implementation ("com.ymm.lib:lib_permission:1.4.4"){
+        exclude group: "com.android.support", module: "appcompat-v7"
+    }
+    implementation "com.blankj:utilcodex:1.26.0"
+    implementation 'com.github.getActivity:XXPermissions:18.5'
+    implementation 'com.wlqq.android:Bugly:2.8.0'
+
+//    implementation "com.amap.api:navi-3dmap-location-search:10.0.700_3dmap10.0.700_loc6.4.5_sea9.7.2"
+//    implementation "com.amap.api:3dmap-location-search:10.0.700_loc6.4.5_sea9.7.2"
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+//    implementation "com.tyt.platform:dns-resolver:1.0.0"
+    implementation 'dnsjava:dnsjava:3.0.2'
+
+}
+
+
+// 打印出所有 .so 库的文件地址
+tasks.whenTaskAdded { task ->
+    // 注意：如果是有多个 flavor，则改成 merge“Flavor”DebugNativeLibs 的形式
+    if (task.name=='mergeDebugNativeLibs') {
+        task.doFirst {
+            println("------------------- find so files start -------------------")
+            println("------------------- find so files start -------------------")
+            println("------------------- find so files start -------------------")
+
+            it.inputs.files.each { file ->
+                printDir(new File(file.absolutePath))
+            }
+
+            println("------------------- find so files end -------------------")
+            println("------------------- find so files end -------------------")
+            println("------------------- find so files end -------------------")
+        }
+    }
+}
+
+def printDir(File file) {
+    if (file != null) {
+        if (file.isDirectory()) {
+            file.listFiles().each {
+                printDir(it)
+            }
+        } else if (file.absolutePath.endsWith(".so")) {
+            println "find so file: $file.absolutePath"
+        }
+    }
+}

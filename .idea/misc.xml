@@ -1,0 +1,22 @@
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../.gradle/caches/transforms-3/9f566e5fdac997e523ec0d93cef139a4/transformed/placeholder-1.0.6-SNAPSHOT/res/layout/layout_abnormal_page.xml" value="0.2824074074074074" />
+        <entry key="app/src/main/res/drawable/round_boarder.xml" value="0.17" />
+        <entry key="app/src/main/res/layout/activity_ansyc_update_uiactivity.xml" value="0.3182291666666667" />
+        <entry key="app/src/main/res/layout/activity_bitmap.xml" value="0.3182291666666667" />
+        <entry key="app/src/main/res/layout/activity_data_flow.xml" value="0.3182291666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.11231884057971014" />
+        <entry key="app/src/main/res/layout/activity_main2.xml" value="0.28306159420289856" />
+        <entry key="app/src/main/res/layout/activity_repeat_lifecycle.xml" value="0.3182291666666667" />
+        <entry key="app/src/main/res/layout/activity_root.xml" value="0.3182291666666667" />
+        <entry key="app/src/main/res/layout/activity_second.xml" value="0.3182291666666667" />
+        <entry key="app/src/main/res/layout/activity_str_builder.xml" value="0.1609375" />
+        <entry key="app/src/main/res/layout/activity_touch_example.xml" value="0.3182291666666667" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+</project>

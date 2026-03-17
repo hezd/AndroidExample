@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/lookupButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="50dp"
+        android:text="lookup"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+    <Button
+        android:id="@+id/lookupApiButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:text="lookupAi"
+        app:layout_constraintTop_toBottomOf="@+id/lookupButton"
+        tools:ignore="HardcodedText" />
+    <Button
+        android:id="@+id/lookupACkButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:text="lookupACK"
+        app:layout_constraintTop_toBottomOf="@+id/lookupApiButton"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/lookupAlBButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:text="lookupAlB"
+        app:layout_constraintTop_toBottomOf="@+id/lookupACkButton"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/clearCacheButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:text="clearCache"
+        app:layout_constraintTop_toBottomOf="@+id/lookupAlBButton"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/clearCacheButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="20dp"
+        android:id="@+id/resultTextView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

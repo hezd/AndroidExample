@@ -1,0 +1,46 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+ext {
+    PUBLISH_GROUP_ID = "com.tyt.platform"
+    PUBLISH_ARTIFACT_ID = "dns-resolver"
+    PUBLISH_VERSION = "1.0.0"
+    POM_PACKAGING = 'aar'
+}
+
+apply from: rootProject.file('maven-publish.gradle')
+//apply from: rootProject.file('nexus-publish.gradle.kts')
+android {
+    namespace 'com.hezd.dnsresolver'
+    compileSdk 30
+
+    defaultConfig {
+        minSdk 23
+        targetSdk 30
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'dnsjava:dnsjava:3.0.2'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.6'
+}
