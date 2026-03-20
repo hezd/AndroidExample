@@ -27,14 +27,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BehaviorExample">
-        <!-- <activity -->
-        <!-- android:name=".activity.DataStoreOneActivity" -->
-        <!-- android:exported="false" /> -->
+
+        <activity
+            android:name=".activity.test.MainTestActivity"
+            android:exported="true"
+            android:launchMode="standard">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.test.SecondTestActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.hezd.task1" />
+
+        <activity
+            android:name=".activity.test.ThirdTestActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.hezd.task1" />
+
         <activity
             android:name=".activity.CustomViewActivity"
-            android:exported="false" /> <!-- <activity -->
-        <!-- android:name=".activity.DataFlowActivity" -->
-        <!-- android:exported="false" /> -->
+            android:exported="false" />
         <activity
             android:name=".activity.SecondActivity"
             android:exported="false" />
@@ -42,22 +60,11 @@
             android:name=".activity.WebViewRenderActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="false" />
-        <!-- android:name=".MainActivity2" -->
-        <!-- android:exported="false" /> -->
-        <!-- <activity android:name=".TouchExampleActivity" /> -->
         <activity
             android:name=".activity.RootActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
+            android:exported="false" />
         <activity android:name=".activity.AppStoreActivity"
-            android:exported="true"
-            />
+            android:exported="true" />
 
         <service android:name="com.blankj.utilcode.util.MessengerUtils$ServerService"
             android:exported="true">
