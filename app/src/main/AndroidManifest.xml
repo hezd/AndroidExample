@@ -29,13 +29,18 @@
         android:theme="@style/Theme.BehaviorExample">
 
         <activity
-            android:name=".activity.test.MainTestActivity"
-            android:exported="true"
-            android:launchMode="standard">
+            android:name=".activity.RouterActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.test.MainTestActivity"
+            android:exported="false"
+            android:launchMode="standard">
         </activity>
 
         <activity
@@ -65,6 +70,9 @@
             android:exported="false" />
         <activity android:name=".activity.AppStoreActivity"
             android:exported="true" />
+
+        <activity android:name=".activity.TestTouchActivity"
+            android:exported="false" />
 
         <service android:name="com.blankj.utilcode.util.MessengerUtils$ServerService"
             android:exported="true">

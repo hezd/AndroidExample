@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 根布局作为容器，提供空白区域方便滑动 -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DDDDDD">
+
+    <!-- 我们的目标区域：设置一个明确大小的 ViewGroup -->
+    <com.hezd.practice.activity.test.MyTestViewGroup
+        android:id="@+id/container"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:background="#FF0000">
+
+        <!-- 子 View 设置在 ViewGroup 中心 -->
+        <com.hezd.practice.activity.test.MyTestView
+            android:id="@+id/childView"
+            android:clickable="true"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:text="Click Me"
+            android:background="#00FF00"
+            android:gravity="center"
+            android:textSize="14sp" />
+
+    </com.hezd.practice.activity.test.MyTestViewGroup>
+
+</FrameLayout>
