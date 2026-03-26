@@ -43,12 +43,21 @@ class CustomDns private constructor(builder: Builder) : Dns {
 
     private val customDnsServers: List<String> = builder.customDnsServers.toList()
     private val dnsQueryTimeoutSeconds: Int = builder.dnsQueryTimeoutSeconds
-    private val enableIpv6: Boolean = builder.enableIpv6
+
+    /** 成功解析结果的缓存存活时间（毫秒）。在此期间内，同一域名的解析将直接返回缓存值。 */
     private val cacheExpirationMillis: Long =
         builder.cacheExpirationMinutes.toLong() * TimeUnit.MINUTES.toMillis(1)
+
+    /** 失败解析结果的缓存存活时间（毫秒）。用于短时间内拦截重试，防止因解析失败导致的频繁无效网络请求。 */
     private val failedCacheExpirationMillis: Long =
         builder.failedCacheExpirationSeconds.toLong() * TimeUnit.SECONDS.toMillis(1)
-    private val enableLogging: Boolean = builder.enableLogging // 日志开关
+
+    private val enableIpv6: Boolean = builder.enableIpv6
+
+    /** 日志开关，开启后将输出详细的 DNS 解析过程和耗时信息。 */
+    private val enableLogging: Boolean = builder.enableLogging
+
+    /** 定义 DNS 解析的优先级策略（如：优先系统、优先自定义等）。 */
     private val dnsExecutionStrategy: DnsExecutionStrategy = builder.dnsExecutionStrategy // 新增执行策略
 
     // 回调函数 - 修改 onSystemDnsFailed 的类型，增加 durationMillis 参数
@@ -387,7 +396,11 @@ class CustomDns private constructor(builder: Builder) : Dns {
      */
     class Builder {
         internal var dnsQueryTimeoutSeconds: Int = 3
+
+        /** 成功解析后的缓存时间（单位：分钟），默认 5 分钟。 */
         internal var cacheExpirationMinutes: Int = 5
+
+        /** 解析失败后的缓存时间（单位：秒），默认 30 秒，防止频繁重试。 */
         internal var failedCacheExpirationSeconds: Int = 30
 
         internal var enableIpv6: Boolean = false
@@ -474,187 +487,3 @@ class CustomDns private constructor(builder: Builder) : Dns {
         }
     }
 }
-
-//
-///**
-// * @author hezd
-// * @date 2025/9/1
-// * @description
-// */
-//class CustomDns : Dns {
-//    // OkHttp 的默认系统 DNS 解析器。
-//    // 在 Android 环境中，Dns.SYSTEM 也是基于系统 DNS 服务进行解析的。
-//    // 作为最终降级手段，它将依赖 Android 系统的DNS配置。
-//    private val backupDns = Dns.SYSTEM
-//
-//    // 自定义公共 DNS 服务器 IP 地址列表
-//    // 优先选择支持 EDNS Client Subnet (ECS) 的公共 DNS，以便获得更准确的 CDN 路由
-//    private val customDnsServers = listOf(
-//        "223.5.5.5",   // 阿里云公共DNS
-//        "223.6.6.6",   // 阿里云公共DNS
-//        "119.29.29.29",// 腾讯云公共DNS
-//        "1.2.4.8",     // DNSPod公共DNS
-////        "8.8.8.8",     // Google Public DNS (可能因为GFW访问不稳定)
-////        "8.8.4.4"      // Google Public DNS
-//    )
-//
-//    // DNS 查询超时时间 (毫秒)。SimpleResolver 超时单位是秒，所以需要转换。
-//    private val DNS_QUERY_TIMEOUT_MILLIS = 3000L // 3秒超时
-//    private val DNS_QUERY_TIMEOUT_SECONDS = 3 // 3秒超时
-//
-//    companion object {
-//        // 静态缓存，允许在网络变化时由 Application 类清空
-//        private val dnsCache = ConcurrentHashMap<String, CacheEntry>()
-//        private val CACHE_EXPIRATION_MILLIS = TimeUnit.MINUTES.toMillis(5) // 缓存 5 分钟
-//
-//        // 定义缓存条目，包含地址列表和创建时间
-//        private data class CacheEntry(val addresses: List<InetAddress>, val creationTime: Long)
-//
-//        /**
-//         * 供外部（例如 Application 类）调用，用于清空整个 DNS 缓存。
-//         * 在网络状态变化时调用此方法非常有用，以避免使用过期的IP地址。
-//         */
-//        @JvmStatic
-//        fun clearCache() {
-//            dnsCache.clear()
-//            println("CustomDns: All cached DNS entries cleared.")
-//        }
-//    }
-//
-//    override fun lookup(hostname: String): List<InetAddress> {
-//        // 1. 尝试从缓存获取
-//        val cachedAddresses = getFromCache(hostname)
-//        if (cachedAddresses != null) {
-//            println("CustomDns: Cache hit for $hostname -> $cachedAddresses")
-//            return cachedAddresses
-//        }
-//
-//        val resolvedAddresses = mutableListOf<InetAddress>()
-//        var customDnsFailedAllAttempts = true // 标记所有自定义 DNS 是否都失败了
-//
-//        // 2. 尝试使用自定义 DNS 服务器
-//        // 遍历自定义 DNS 服务器列表，直到成功解析
-//        for (dnsServerIp in customDnsServers) {
-//            try {
-//                val resolver = SimpleResolver(dnsServerIp)
-//                resolver.setTimeout(DNS_QUERY_TIMEOUT_SECONDS)
-////                (DNS_QUERY_TIMEOUT_MILLIS / 1000).toDuration(DurationUnit.SECONDS)
-//
-//                // 同时查询 A (IPv4) 和 AAAA (IPv6) 记录
-//                val lookupA = Lookup(hostname, Type.A)
-//                lookupA.setResolver(resolver)
-//                lookupA.run()
-//
-//                val lookupAAAA = Lookup(hostname, Type.AAAA)
-//                lookupAAAA.setResolver(resolver)
-//                lookupAAAA.run()
-//
-//                var currentServerFoundAddress = false // 标记当前服务器是否成功解析到IP地址
-//
-//                if (lookupA.result == Lookup.SUCCESSFUL) {
-//                    lookupA.answers?.forEach { record ->
-//                        if (record is ARecord) {
-//                            val address = record.address.hostAddress
-//                            resolvedAddresses.add(InetAddress.getByName(address))
-//                            currentServerFoundAddress = true
-//                        }
-//                    }
-//                } else {
-//                    println("Custom DNS ($dnsServerIp) A record lookup failed for $hostname: ${lookupA.errorString}")
-//                }
-//
-////                if (lookupAAAA.result == Lookup.SUCCESSFUL) {
-////                    lookupAAAA.answers?.forEach { record ->
-////                        if (record is AAAARecord) {
-////                            resolvedAddresses.add(record.address)
-////                            currentServerFoundAddress = true
-////                        }
-////                    }
-////                } else {
-////                    println("Custom DNS ($dnsServerIp) AAAA record lookup failed for $hostname: ${lookupAAAA.errorString}")
-////                }
-//
-//                // 如果当前自定义服务器成功解析到至少一个IP地址，则视为成功
-//                if (currentServerFoundAddress && resolvedAddresses.isNotEmpty()) {
-//                    customDnsFailedAllAttempts = false // 至少一个自定义 DNS 成功了
-//                    println("Custom DNS ($dnsServerIp) successfully resolved $hostname with: $resolvedAddresses")
-//                    break // 成功解析后，不再尝试其他自定义DNS
-//                } else {
-//                    // 如果当前服务器没解析到任何IP，清除之前可能因尝试其他服务器而添加的部分结果
-//                    // 避免不完整的解析结果被缓存或返回
-//                    resolvedAddresses.clear()
-//                }
-//
-//            } catch (e: Exception) {
-//                // 捕获连接超时、网络不可达等异常
-//                println("Custom DNS ($dnsServerIp) error for $hostname: ${e.message}")
-//                resolvedAddresses.clear() // 清除当前尝试的结果
-//            }
-//        }
-//
-//        // 3. 如果自定义 DNS 成功并有结果，则缓存并返回
-//        if (!customDnsFailedAllAttempts && resolvedAddresses.isNotEmpty()) {
-//            // 对结果进行去重并保持原始顺序 (或按 IPv4 -> IPv6 排序)
-//            val uniqueAddresses = resolvedAddresses.distinct()
-//            putIntoCache(hostname, uniqueAddresses)
-//            return Collections.unmodifiableList(uniqueAddresses) // 返回不可变列表
-//        }
-//
-//        // 4. 如果所有自定义 DNS 都失败或没有找到任何 IP 记录，回退到系统 DNS
-//        println("CustomDns: All custom DNS failed/no IP records for $hostname, falling back to system DNS.")
-//        return try {
-//            val systemAddresses = backupDns.lookup(hostname)
-//            // 缓存系统 DNS 的结果
-//            if (systemAddresses.isNotEmpty()) {
-//                putIntoCache(hostname, systemAddresses)
-//            } else {
-//                // 如果系统 DNS 也解析失败，将此失败信息也放入缓存，但设置一个短的过期时间
-//                // 避免短时间内重复查询一个已知无法解析的域名
-//                putIntoCache(hostname, emptyList(), shortExpiration = true)
-//                println("CustomDns: System DNS also failed for $hostname. Cached empty list with short expiration.")
-//            }
-//            systemAddresses
-//        } catch (e: UnknownHostException) {
-//            // 系统 DNS 也解析失败
-//            println("CustomDns: System DNS lookup failed for $hostname: ${e.message}")
-//            // 将此失败信息放入缓存，但设置一个短的过期时间
-//            putIntoCache(hostname, emptyList(), shortExpiration = true)
-//            throw e // 重新抛出 OkHttp 期望的异常
-//        } catch (e: Exception) {
-//            // 其他系统 DNS 解析错误
-//            println("CustomDns: System DNS lookup failed for $hostname due to an unexpected error: ${e.message}")
-//            // 将此失败信息放入缓存，但设置一个短的过期时间
-//            putIntoCache(hostname, emptyList(), shortExpiration = true)
-//            throw UnknownHostException("System DNS lookup failed for $hostname: ${e.message}")
-//        }
-//    }
-//
-//    // 从缓存获取，并处理过期逻辑
-//    private fun getFromCache(hostname: String): List<InetAddress>? {
-//        val entry = dnsCache[hostname]
-//        if (entry != null) {
-//            if (System.currentTimeMillis() - entry.creationTime < CACHE_EXPIRATION_MILLIS) {
-//                // 缓存有效
-//                return entry.addresses
-//            } else {
-//                // 缓存过期，移除
-//                println("CustomDns: Cache expired for $hostname, removing.")
-//                dnsCache.remove(hostname)
-//            }
-//        }
-//        return null
-//    }
-//
-//    // 将解析结果放入缓存
-//    private fun putIntoCache(hostname: String, addresses: List<InetAddress>, shortExpiration: Boolean = false) {
-//        val expiration = if (shortExpiration) TimeUnit.SECONDS.toMillis(30) else CACHE_EXPIRATION_MILLIS // 短期缓存30秒
-//        dnsCache[hostname] = CacheEntry(addresses, System.currentTimeMillis() + expiration) // 记录过期时间
-//        println("CustomDns: Cached $hostname -> $addresses with expiration ${if (shortExpiration) "short" else "normal"}.")
-//    }
-//
-//    // 在 CustomDns 中提供一个方法，用于清除单个域名的缓存
-//    fun invalidateCache(hostname: String) {
-//        dnsCache.remove(hostname)
-//        println("CustomDns: Cache invalidated for $hostname.")
-//    }
-//}
