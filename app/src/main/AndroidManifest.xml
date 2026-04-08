@@ -74,12 +74,6 @@
         <activity android:name=".activity.TestTouchActivity"
             android:exported="false" />
 
-        <service android:name="com.blankj.utilcode.util.MessengerUtils$ServerService"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="${applicationId}.messenger" />
-            </intent-filter>
-        </service>
     </application>
 
 </manifest>

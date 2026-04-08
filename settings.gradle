@@ -1,27 +1,27 @@
 pluginManagement {
-//    repositories {
-//        google()
-//        mavenCentral()
-//        gradlePluginPortal()
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+            allowInsecureProtocol true
+            mavenContent { releasesOnly() }
+        }
+//        mavenLocal()
 //        maven {
-//            url "https://plugins.gradle.org/m2/"
-//            allowInsecureProtocol true
-//            mavenContent { releasesOnly() }
+//            allowInsecureProtocol(true)
+//            url 'http://maven.amh-group.com/artifactory/libs-release-local'
 //        }
-////        mavenLocal()
-////        maven {
-////            allowInsecureProtocol(true)
-////            url 'http://maven.amh-group.com/artifactory/libs-release-local'
-////        }
-////        maven {
-////            allowInsecureProtocol(true)
-////            url 'http://maven.amh-group.com/artifactory/libs-release'
-////        }
-////        maven {
-////            allowInsecureProtocol(true)
-////            url 'http://maven.amh-group.com/artifactory/libs-snapshot'
-////        }
-//    }
+//        maven {
+//            allowInsecureProtocol(true)
+//            url 'http://maven.amh-group.com/artifactory/libs-release'
+//        }
+//        maven {
+//            allowInsecureProtocol(true)
+//            url 'http://maven.amh-group.com/artifactory/libs-snapshot'
+//        }
+    }
 
     repositories {
         gradlePluginPortal()
@@ -36,38 +36,38 @@ dependencyResolutionManagement {
         mavenCentral()
         // JitPack 远程仓库：https://jitpack.io
         maven { url 'https://jitpack.io' }
-        maven {
-            allowInsecureProtocol(true)
-            url 'http://maven.amh-group.com/artifactory/libs-release-local'
-        }
-        maven {
-            allowInsecureProtocol(true)
-            url 'http://maven.amh-group.com/artifactory/libs-release'
-        }
-        maven {
-            allowInsecureProtocol(true)
-            url 'http://maven.amh-group.com/artifactory/libs-snapshot'
-        }
+//        maven {
+//            allowInsecureProtocol(true)
+//            url 'http://maven.amh-group.com/artifactory/libs-release-local'
+//        }
+//        maven {
+//            allowInsecureProtocol(true)
+//            url 'http://maven.amh-group.com/artifactory/libs-release'
+//        }
+//        maven {
+//            allowInsecureProtocol(true)
+//            url 'http://maven.amh-group.com/artifactory/libs-snapshot'
+//        }
 
         // tyt
-        maven {
-            allowInsecureProtocol(true)
-            url 'http://192.168.2.20:8081/nexus/content/repositories/snapshots/'
-        }
-        maven {
-            allowInsecureProtocol(true)
-            url 'http://192.168.2.20:8081/nexus/content/repositories/release/'
-        }
-    }
-//    repositories {
-//        google()
-//        mavenCentral()
 //        maven {
-//            url "https://plugins.gradle.org/m2/"
-//            allowInsecureProtocol true
-//            mavenContent { releasesOnly() }
+//            allowInsecureProtocol(true)
+//            url 'http://192.168.2.20:8081/nexus/content/repositories/snapshots/'
 //        }
-//        mavenLocal()
+//        maven {
+//            allowInsecureProtocol(true)
+//            url 'http://192.168.2.20:8081/nexus/content/repositories/release/'
+//        }
+    }
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+            allowInsecureProtocol true
+            mavenContent { releasesOnly() }
+        }
+        mavenLocal()
 
 //        maven {
 //            allowInsecureProtocol(true)
@@ -81,7 +81,7 @@ dependencyResolutionManagement {
 //            allowInsecureProtocol(true)
 //            url 'http://maven.amh-group.com/artifactory/libs-snapshot'
 //        }
-//    }
+    }
 
 }
 
