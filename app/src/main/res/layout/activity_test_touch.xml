@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 根布局作为容器，提供空白区域方便滑动 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +10,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
-        android:background="#FF0000">
+        android:background="@drawable/selector_parent_view">
 
         <!-- 子 View 设置在 ViewGroup 中心 -->
         <com.hezd.practice.activity.test.MyTestView
@@ -21,7 +20,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:text="Click Me"
-            android:background="#00FF00"
+            android:background="@drawable/bg_child_view"
             android:gravity="center"
             android:textSize="14sp" />
 

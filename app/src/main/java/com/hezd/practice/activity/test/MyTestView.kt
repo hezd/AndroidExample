@@ -17,6 +17,10 @@ class MyTestView(context: Context, attrs: AttributeSet) : AppCompatTextView(cont
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         Log.d(tag, "onTouchEvent: " + MotionEvent.actionToString(event.action))
+//        if (event.action == MotionEvent.ACTION_DOWN) {
+//            Log.d(tag, "onTouchEvent: ACTION_DOWN")
+//            return false
+//        }
         return super.onTouchEvent(event)
     }
 

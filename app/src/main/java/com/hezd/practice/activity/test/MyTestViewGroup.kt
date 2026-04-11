@@ -15,7 +15,7 @@ class MyTestViewGroup(context: Context, attrs: AttributeSet) : FrameLayout(conte
     }
 
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
-        Log.d(tag, "onInterceptTouchEvent: "+MotionEvent.actionToString(event.action))
+        Log.d(tag, "onInterceptTouchEvent: " + MotionEvent.actionToString(event.action))
         return super.onInterceptTouchEvent(event)
     }
 
